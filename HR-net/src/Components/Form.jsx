@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "./DatePicker";
 import Dropdown from "./Dropdown";
 import Modal from "./Modal";
+import { Link } from "react-router-dom";
 
 const states = [
   { label: "Alabama", value: "AL" },
@@ -117,6 +118,7 @@ const Form = () => {
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         Employee Created!
       </Modal>
+      <Link to="/employee-list">View Current Employees</Link>
     </div>
   );
 };
