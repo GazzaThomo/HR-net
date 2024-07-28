@@ -6,7 +6,10 @@ import { Link } from "react-router-dom";
 
 const states = [
   { label: "Alabama", value: "AL" },
-  // Add other states here...
+  { label: "Charente", value: "16" },
+  { label: "Charente-martime", value: "17" },
+  { label: "Rhone", value: "69" },
+  { label: "Ain", value: "01" },
 ];
 
 const departments = [
