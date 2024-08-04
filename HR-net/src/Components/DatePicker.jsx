@@ -7,7 +7,7 @@ const DatePicker = ({ id, selected, onChange }) => {
     <ReactDatePicker
       selected={selected}
       onChange={(date) => onChange(date)}
-      dateFormat="MM/dd/yyyy"
+      dateFormat="dd/MM/yyyy"
     />
   );
 };

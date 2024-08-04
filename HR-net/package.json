@@ -18,7 +18,8 @@
     "react-router-dom": "^6.25.1",
     "react-select": "^5.8.0",
     "sass": "^1.77.8",
-    "yarn": "^1.22.22"
+    "yarn": "^1.22.22",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
