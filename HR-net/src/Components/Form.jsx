@@ -22,22 +22,26 @@ const Form = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const addEmployee = useStore((state) => state.addEmployee);
 
+  //for firstname, lastname, address, zipcode, city
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
 
+  //for date change
   const handleDateChange = (id, date) => {
     setFormData({ ...formData, [id]: date });
   };
 
+  //all dropdown changes
   const handleDropdownChange = (id, selectedOption) => {
     setFormData({ ...formData, [id]: selectedOption.value });
   };
 
+  //on validate form button
   const saveEmployee = () => {
-    addEmployee(formData); // Add employee to store
-    setModalOpen(true);
+    addEmployee(formData); //add employee to store
+    setModalOpen(true); //opens modal
   };
 
   return (

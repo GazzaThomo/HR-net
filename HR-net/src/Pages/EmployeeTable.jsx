@@ -14,17 +14,20 @@ const EmployeeTable = () => {
   const employees = useStore((state) => state.employees);
   const [search, setSearch] = useState(""); //state for name search
   const [entriesPerPage, setEntriesPerPage] = useState(5); //state for entries per page
-  const pageSizes = [5, 10, 25, 50, 100];
+  const pageSizes = [5, 10, 25, 50, 100]; //for number of entires in dropdown
 
+  //function for employee name search
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
 
+  //handles dropdown list for number of entries shown
   const handleEntriesChange = (e) => {
     setEntriesPerPage(Number(e.target.value));
     pagination.fns.onSetPage(0); //reset to the first page when changing entries per page. fns = pagination functions https://react-table-library.com/?path=/story/types-pagination--page
   };
 
+  //format data for react-tables
   const data = {
     nodes: employees
       .filter((item) =>
@@ -33,6 +36,7 @@ const EmployeeTable = () => {
       .map((item, index) => ({ ...item, key: index })),
   };
 
+  //create pagination parameters
   const pagination = usePagination(data, {
     state: {
       page: 0,
@@ -41,6 +45,7 @@ const EmployeeTable = () => {
     onChange: onPaginationChange,
   });
 
+  //Create sort functions for react-tables
   const sort = useSort(
     data,
     {
@@ -71,16 +76,19 @@ const EmployeeTable = () => {
     }
   );
 
+  // needed for sort parameters
   function onSortChange(action, state) {
     // console.log(action, state);
     return null;
   }
 
+  //needed for pagination parameters
   function onPaginationChange(action, state) {
     // console.log(action, state);
     return null;
   }
 
+  //create columns for react-tables
   const columns = [
     {
       label: "First Name",
