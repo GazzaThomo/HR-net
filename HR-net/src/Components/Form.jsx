@@ -3,22 +3,9 @@ import DatePicker from "./DatePicker";
 import Dropdown from "./Dropdown";
 import Modal from "./Modal";
 import { Link } from "react-router-dom";
-
-const states = [
-  { label: "Alabama", value: "AL" },
-  { label: "Charente", value: "16" },
-  { label: "Charente-martime", value: "17" },
-  { label: "Rhone", value: "69" },
-  { label: "Ain", value: "01" },
-];
-
-const departments = [
-  { label: "Sales", value: "Sales" },
-  { label: "Marketing", value: "Marketing" },
-  { label: "Engineering", value: "Engineering" },
-  { label: "Human Resources", value: "Human Resources" },
-  { label: "Legal", value: "Legal" },
-];
+import useStore from "../store/store";
+import { states } from "../formData/states";
+import { departments } from "../formData/departments";
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -33,6 +20,7 @@ const Form = () => {
     department: "",
   });
   const [modalOpen, setModalOpen] = useState(false);
+  const addEmployee = useStore((state) => state.addEmployee);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -48,9 +36,7 @@ const Form = () => {
   };
 
   const saveEmployee = () => {
-    const employees = JSON.parse(localStorage.getItem("employees")) || [];
-    employees.push(formData);
-    localStorage.setItem("employees", JSON.stringify(employees));
+    addEmployee(formData); // Add employee to store
     setModalOpen(true);
   };
 

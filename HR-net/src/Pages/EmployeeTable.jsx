@@ -7,17 +7,12 @@ import {
   SortToggleType,
 } from "@table-library/react-table-library/sort";
 import { usePagination } from "@table-library/react-table-library/pagination";
+import useStore from "../store/store";
 
 const EmployeeTable = () => {
   const theme = useTheme(getTheme());
-  const [employees, setEmployees] = useState([]);
+  const employees = useStore((state) => state.employees);
   const [search, setSearch] = useState("");
-
-  //for fetching the data in localstorage
-  useEffect(() => {
-    const storedEmployees = JSON.parse(localStorage.getItem("employees")) || [];
-    setEmployees(storedEmployees);
-  }, []);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
