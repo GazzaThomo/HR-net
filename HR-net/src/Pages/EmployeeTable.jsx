@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { CompactTable } from "@table-library/react-table-library/compact";
 import { getTheme } from "@table-library/react-table-library/baseline";
 import { useTheme } from "@table-library/react-table-library/theme";
-import { useSort } from "@table-library/react-table-library/sort";
+import {
+  useSort,
+  SortToggleType,
+} from "@table-library/react-table-library/sort";
+import { usePagination } from "@table-library/react-table-library/pagination";
 
 const EmployeeTable = () => {
   const theme = useTheme(getTheme());
@@ -20,10 +24,20 @@ const EmployeeTable = () => {
   };
 
   const data = {
-    nodes: employees.filter((item) =>
-      item.firstName.toLowerCase().includes(search.toLowerCase())
-    ),
+    nodes: employees
+      .filter((item) =>
+        item.firstName.toLowerCase().includes(search.toLowerCase())
+      )
+      .map((item, index) => ({ ...item, key: index })),
   };
+
+  const pagination = usePagination(data, {
+    state: {
+      page: 0,
+      size: 10,
+    },
+    onChange: onPaginationChange,
+  });
 
   const sort = useSort(
     data,
@@ -31,6 +45,7 @@ const EmployeeTable = () => {
       onChange: onSortChange,
     },
     {
+      sortToggleType: SortToggleType.AlternateWithReset,
       sortFns: {
         FirstName: (array) =>
           array.sort((a, b) => a.firstName.localeCompare(b.firstName)),
@@ -55,6 +70,10 @@ const EmployeeTable = () => {
   );
 
   function onSortChange(action, state) {
+    console.log(action, state);
+  }
+
+  function onPaginationChange(action, state) {
     console.log(action, state);
   }
 
@@ -118,10 +137,37 @@ const EmployeeTable = () => {
       <br />
 
       {employees.length > 0 ? (
-        <CompactTable columns={columns} data={data} theme={theme} sort={sort} />
+        <CompactTable
+          columns={columns}
+          data={data}
+          theme={theme}
+          sort={sort}
+          pagination={pagination}
+        />
       ) : (
         <p>No employees found.</p>
       )}
+      <br />
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <span>Total Pages: {pagination.state.getTotalPages(data.nodes)}</span>
+
+        <span>
+          Page:{" "}
+          {pagination.state.getPages(data.nodes).map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              style={{
+                fontWeight: pagination.state.page === index ? "bold" : "normal",
+              }}
+              onClick={() => pagination.fns.onSetPage(index)}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </span>
+      </div>
+      <br />
       <a href="/">Home</a>
     </div>
   );
