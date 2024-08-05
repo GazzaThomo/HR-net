@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CompactTable } from "@table-library/react-table-library/compact";
 import { getTheme } from "@table-library/react-table-library/baseline";
 import { useTheme } from "@table-library/react-table-library/theme";
+import { useSort } from "@table-library/react-table-library/sort";
 
 const EmployeeTable = () => {
   const theme = useTheme(getTheme());
@@ -24,22 +25,85 @@ const EmployeeTable = () => {
     ),
   };
 
+  const sort = useSort(
+    data,
+    {
+      onChange: onSortChange,
+    },
+    {
+      sortFns: {
+        FirstName: (array) =>
+          array.sort((a, b) => a.firstName.localeCompare(b.firstName)),
+        LastName: (array) =>
+          array.sort((a, b) => a.lastName.localeCompare(b.lastName)),
+        StartDate: (array) =>
+          array.sort((a, b) => new Date(a.startDate) - new Date(b.startDate)),
+        Department: (array) =>
+          array.sort((a, b) => a.department.localeCompare(b.department)),
+        DoB: (array) =>
+          array.sort(
+            (a, b) => new Date(a.dateOfBirth) - new Date(b.dateOfBirth)
+          ),
+        Street: (array) =>
+          array.sort((a, b) => a.street.localeCompare(b.street)),
+        City: (array) => array.sort((a, b) => a.city.localeCompare(b.city)),
+        State: (array) => array.sort((a, b) => a.state.localeCompare(b.state)),
+        ZipCode: (array) =>
+          array.sort((a, b) => a.zipCode.localeCompare(b.zipCode)),
+      },
+    }
+  );
+
+  function onSortChange(action, state) {
+    console.log(action, state);
+  }
+
   const columns = [
-    { label: "First Name", renderCell: (item) => item.firstName },
-    { label: "Last Name", renderCell: (item) => item.lastName },
+    {
+      label: "First Name",
+      renderCell: (item) => item.firstName,
+      sort: { sortKey: "FirstName" },
+    },
+    {
+      label: "Last Name",
+      renderCell: (item) => item.lastName,
+      sort: { sortKey: "LastName" },
+    },
     {
       label: "Start Date",
       renderCell: (item) => new Date(item.startDate).toLocaleDateString(),
+      sort: { sortKey: "StartDate" },
     },
-    { label: "Department", renderCell: (item) => item.department },
+    {
+      label: "Department",
+      renderCell: (item) => item.department,
+      sort: { sortKey: "Department" },
+    },
     {
       label: "Date of Birth",
       renderCell: (item) => new Date(item.dateOfBirth).toLocaleDateString(),
+      sort: { sortKey: "DoB" },
     },
-    { label: "Street", renderCell: (item) => item.street },
-    { label: "City", renderCell: (item) => item.city },
-    { label: "State", renderCell: (item) => item.state },
-    { label: "Zip Code", renderCell: (item) => item.zipCode },
+    {
+      label: "Street",
+      renderCell: (item) => item.street,
+      sort: { sortKey: "Street" },
+    },
+    {
+      label: "City",
+      renderCell: (item) => item.city,
+      sort: { sortKey: "City" },
+    },
+    {
+      label: "State",
+      renderCell: (item) => item.state,
+      sort: { sortKey: "State" },
+    },
+    {
+      label: "Zip Code",
+      renderCell: (item) => item.zipCode,
+      sort: { sortKey: "ZipCode" },
+    },
   ];
 
   return (
@@ -54,7 +118,7 @@ const EmployeeTable = () => {
       <br />
 
       {employees.length > 0 ? (
-        <CompactTable columns={columns} data={data} theme={theme} />
+        <CompactTable columns={columns} data={data} theme={theme} sort={sort} />
       ) : (
         <p>No employees found.</p>
       )}
