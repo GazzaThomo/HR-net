@@ -65,11 +65,13 @@ const EmployeeTable = () => {
   );
 
   function onSortChange(action, state) {
-    console.log(action, state);
+    // console.log(action, state);
+    return null;
   }
 
   function onPaginationChange(action, state) {
-    console.log(action, state);
+    // console.log(action, state);
+    return null;
   }
 
   const columns = [
