@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CompactTable } from "@table-library/react-table-library/compact";
 import { getTheme } from "@table-library/react-table-library/baseline";
 import { useTheme } from "@table-library/react-table-library/theme";
@@ -12,10 +12,17 @@ import useStore from "../store/store";
 const EmployeeTable = () => {
   const theme = useTheme(getTheme());
   const employees = useStore((state) => state.employees);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(""); //state for name search
+  const [entriesPerPage, setEntriesPerPage] = useState(5); //state for entries per page
+  const pageSizes = [5, 10, 25, 50, 100];
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
+  };
+
+  const handleEntriesChange = (e) => {
+    setEntriesPerPage(Number(e.target.value));
+    pagination.fns.onSetPage(0); //reset to the first page when changing entries per page. fns = pagination functions https://react-table-library.com/?path=/story/types-pagination--page
   };
 
   const data = {
@@ -29,7 +36,7 @@ const EmployeeTable = () => {
   const pagination = usePagination(data, {
     state: {
       page: 0,
-      size: 10,
+      size: entriesPerPage, // Use the state for entries per page
     },
     onChange: onPaginationChange,
   });
@@ -125,6 +132,23 @@ const EmployeeTable = () => {
   return (
     <div className="employee-table-container">
       <h1>Current Employees</h1>
+
+      <label htmlFor="entries">
+        Entries per page:&nbsp;
+        <select
+          id="entries"
+          value={entriesPerPage}
+          onChange={handleEntriesChange}
+        >
+          {pageSizes.map((size) => (
+            <option value={size} key={`size-${size}`}>
+              {size}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      <br />
 
       <label htmlFor="search">
         Search by first name:&nbsp;
