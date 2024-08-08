@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import useStore from "../store/store";
 import { states } from "../formData/states";
 import { departments } from "../formData/departments";
+import CreateDropdown from "custom-react-dropdown-hrnet";
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -85,9 +86,14 @@ const Form = () => {
           <input id="city" value={formData.city} onChange={handleChange} />
 
           <label htmlFor="state">State</label>
-          <Dropdown
+          {/* <Dropdown
             id="state"
             options={states}
+            onChange={(option) => handleDropdownChange("state", option)}
+          /> */}
+          <CreateDropdown
+            dropdownId="state"
+            optionsArray={states}
             onChange={(option) => handleDropdownChange("state", option)}
           />
 
@@ -101,9 +107,14 @@ const Form = () => {
         </fieldset>
 
         <label htmlFor="department">Department</label>
-        <Dropdown
+        {/* <Dropdown
           id="department"
           options={departments}
+          onChange={(option) => handleDropdownChange("department", option)}
+        /> */}
+        <CreateDropdown
+          dropdownId="department"
+          optionsArray={departments}
           onChange={(option) => handleDropdownChange("department", option)}
         />
       </form>

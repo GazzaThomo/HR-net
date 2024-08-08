@@ -1049,6 +1049,11 @@ csstype@^3.0.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.3.tgz#d80ff294d114fb0e6ac500fbf85b60137d7eff81"
   integrity sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==
 
+custom-react-dropdown-hrnet@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/custom-react-dropdown-hrnet/-/custom-react-dropdown-hrnet-1.0.2.tgz#e8522cb77cc660375a86e3b2d1f120419059fd66"
+  integrity sha512-JVDJ68Gxb7xo8lUU8Nc4r7mpj1Go/1UKQKvBQS/IWhVvy96sUnXnxpMjd5hiqzQVXbRpIrwN5+b5CLzjiBZDcw==
+
 data-view-buffer@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/data-view-buffer/-/data-view-buffer-1.0.1.tgz#8ea6326efec17a2e42620696e671d7d5a8bc66b2"
