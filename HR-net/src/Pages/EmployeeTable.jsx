@@ -1,10 +1,10 @@
 import useStore from "../store/store";
 import DataTable from "react-data-table-component";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const EmployeeTable = () => {
   const employees = useStore((state) => state.employees);
-  console.log(employees);
   const [search, setSearch] = useState(""); //state for name search
 
   const sortDate = (rowA, rowB, field) => {
@@ -98,7 +98,6 @@ const EmployeeTable = () => {
       );
     })
     .map((item, index) => ({ ...item, key: index }));
-  console.log(data);
 
   return (
     <div className="employee-table-container">
@@ -110,11 +109,15 @@ const EmployeeTable = () => {
       </label>
 
       <br />
+      <br />
       {employees.length > 0 ? (
         <DataTable columns={columns} data={data} pagination />
       ) : (
         <p>No employees found.</p>
       )}
+      <Link to="/" className="current-emp-btn">
+        Home
+      </Link>
     </div>
   );
 };

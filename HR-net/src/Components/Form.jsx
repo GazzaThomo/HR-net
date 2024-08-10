@@ -88,11 +88,7 @@ const Form = () => {
           <input id="city" value={formData.city} onChange={handleChange} />
 
           <label htmlFor="state">State</label>
-          {/* <Dropdown
-            id="state"
-            options={states}
-            onChange={(option) => handleDropdownChange("state", option)}
-          /> */}
+
           <CreateDropdown
             dropdownId="state"
             optionsArray={states}
@@ -109,11 +105,7 @@ const Form = () => {
         </fieldset>
 
         <label htmlFor="department">Department</label>
-        {/* <Dropdown
-          id="department"
-          options={departments}
-          onChange={(option) => handleDropdownChange("department", option)}
-        /> */}
+
         <CreateDropdown
           dropdownId="department"
           optionsArray={departments}
