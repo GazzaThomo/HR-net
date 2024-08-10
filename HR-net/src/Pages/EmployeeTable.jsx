@@ -1,162 +1,108 @@
-import React, { useState } from "react";
-import { CompactTable } from "@table-library/react-table-library/compact";
-import { getTheme } from "@table-library/react-table-library/baseline";
-import { useTheme } from "@table-library/react-table-library/theme";
-import {
-  useSort,
-  SortToggleType,
-} from "@table-library/react-table-library/sort";
-import { usePagination } from "@table-library/react-table-library/pagination";
 import useStore from "../store/store";
+import DataTable from "react-data-table-component";
+import { useState } from "react";
 
 const EmployeeTable = () => {
-  const theme = useTheme(getTheme());
   const employees = useStore((state) => state.employees);
+  console.log(employees);
   const [search, setSearch] = useState(""); //state for name search
-  const [entriesPerPage, setEntriesPerPage] = useState(5); //state for entries per page
-  const pageSizes = [5, 10, 25, 50, 100]; //for number of entires in dropdown
+
+  const sortDate = (rowA, rowB, field) => {
+    return new Date(rowA[field]) - new Date(rowB[field]);
+  };
 
   //function for employee name search
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
 
-  //handles dropdown list for number of entries shown
-  const handleEntriesChange = (e) => {
-    setEntriesPerPage(Number(e.target.value));
-    pagination.fns.onSetPage(0); //reset to the first page when changing entries per page. fns = pagination functions https://react-table-library.com/?path=/story/types-pagination--page
-  };
-
-  //format data for react-tables
-  const data = {
-    nodes: employees
-      .filter((item) =>
-        item.firstName.toLowerCase().includes(search.toLowerCase())
-      )
-      .map((item, index) => ({ ...item, key: index })),
-  };
-
-  //create pagination parameters
-  const pagination = usePagination(data, {
-    state: {
-      page: 0,
-      size: entriesPerPage, // Use the state for entries per page
-    },
-    onChange: onPaginationChange,
-  });
-
-  //Create sort functions for react-tables
-  const sort = useSort(
-    data,
-    {
-      onChange: onSortChange,
-    },
-    {
-      sortToggleType: SortToggleType.AlternateWithReset,
-      sortFns: {
-        FirstName: (array) =>
-          array.sort((a, b) => a.firstName.localeCompare(b.firstName)),
-        LastName: (array) =>
-          array.sort((a, b) => a.lastName.localeCompare(b.lastName)),
-        StartDate: (array) =>
-          array.sort((a, b) => new Date(a.startDate) - new Date(b.startDate)),
-        Department: (array) =>
-          array.sort((a, b) => a.department.localeCompare(b.department)),
-        DoB: (array) =>
-          array.sort(
-            (a, b) => new Date(a.dateOfBirth) - new Date(b.dateOfBirth)
-          ),
-        Street: (array) =>
-          array.sort((a, b) => a.street.localeCompare(b.street)),
-        City: (array) => array.sort((a, b) => a.city.localeCompare(b.city)),
-        State: (array) => array.sort((a, b) => a.state.localeCompare(b.state)),
-        ZipCode: (array) =>
-          array.sort((a, b) => a.zipCode.localeCompare(b.zipCode)),
-      },
-    }
-  );
-
-  // needed for sort parameters
-  function onSortChange(action, state) {
-    // console.log(action, state);
-    return null;
-  }
-
-  //needed for pagination parameters
-  function onPaginationChange(action, state) {
-    // console.log(action, state);
-    return null;
-  }
-
-  //create columns for react-tables
   const columns = [
     {
-      label: "First Name",
-      renderCell: (item) => item.firstName,
-      sort: { sortKey: "FirstName" },
+      name: "First Name",
+      selector: (row) => row.firstName,
+      sortable: true,
     },
     {
-      label: "Last Name",
-      renderCell: (item) => item.lastName,
-      sort: { sortKey: "LastName" },
+      name: "Last Name",
+      selector: (row) => row.lastName,
+      sortable: true,
     },
     {
-      label: "Start Date",
-      renderCell: (item) => new Date(item.startDate).toLocaleDateString(),
-      sort: { sortKey: "StartDate" },
+      name: "Start Date",
+      selector: (row) => new Date(row.startDate).toLocaleDateString(),
+      sortable: true,
+      sortFunction: (rowA, rowB) => sortDate(rowA, rowB, "startDate"),
     },
     {
-      label: "Department",
-      renderCell: (item) => item.department,
-      sort: { sortKey: "Department" },
+      name: "Department",
+      selector: (row) => row.department,
+      sortable: true,
     },
     {
-      label: "Date of Birth",
-      renderCell: (item) => new Date(item.dateOfBirth).toLocaleDateString(),
-      sort: { sortKey: "DoB" },
+      name: "Date of Birth",
+      selector: (row) => new Date(row.dateOfBirth).toLocaleDateString(),
+      sortable: true,
+      sortFunction: (rowA, rowB) => sortDate(rowA, rowB, "dateOfBirth"),
     },
     {
-      label: "Street",
-      renderCell: (item) => item.street,
-      sort: { sortKey: "Street" },
+      name: "Street",
+      selector: (row) => row.street,
+      sortable: true,
     },
     {
-      label: "City",
-      renderCell: (item) => item.city,
-      sort: { sortKey: "City" },
+      name: "City",
+      selector: (row) => row.city,
+      sortable: true,
     },
     {
-      label: "State",
-      renderCell: (item) => item.state,
-      sort: { sortKey: "State" },
+      name: "State",
+      selector: (row) => row.state,
+      sortable: true,
     },
     {
-      label: "Zip Code",
-      renderCell: (item) => item.zipCode,
-      sort: { sortKey: "ZipCode" },
+      name: "Zip Code",
+      selector: (row) => row.zipCode,
+      sortable: true,
     },
   ];
+
+  const reformatDateToDDMMYYYY = (dateStr) => {
+    const [year, month, day] = dateStr.split("-");
+    return `${day}/${month}/${year}`;
+  };
+
+  const data = employees
+    .filter((item) => {
+      //make everything lowercase to make case insensitive
+      const searchLower = search.toLowerCase();
+
+      // reformat date fields for search
+      const startDateFormatted = reformatDateToDDMMYYYY(
+        item.startDate
+      ).toLowerCase();
+      const dateOfBirthFormatted = reformatDateToDDMMYYYY(
+        item.dateOfBirth
+      ).toLowerCase();
+
+      //ugly, but necessary
+      return (
+        item.firstName.toLowerCase().includes(searchLower) ||
+        item.lastName.toLowerCase().includes(searchLower) ||
+        startDateFormatted.includes(searchLower) ||
+        dateOfBirthFormatted.includes(searchLower) ||
+        item.department.toLowerCase().includes(searchLower) ||
+        item.street.toLowerCase().includes(searchLower) ||
+        item.city.toLowerCase().includes(searchLower) ||
+        item.state.toLowerCase().includes(searchLower) ||
+        item.zipCode.toLowerCase().includes(searchLower)
+      );
+    })
+    .map((item, index) => ({ ...item, key: index }));
+  console.log(data);
 
   return (
     <div className="employee-table-container">
       <h1>Current Employees</h1>
-
-      <label htmlFor="entries">
-        Entries per page:&nbsp;
-        <select
-          id="entries"
-          value={entriesPerPage}
-          onChange={handleEntriesChange}
-        >
-          {pageSizes.map((size) => (
-            <option value={size} key={`size-${size}`}>
-              {size}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <br />
 
       <label htmlFor="search">
         Search by first name:&nbsp;
@@ -164,40 +110,11 @@ const EmployeeTable = () => {
       </label>
 
       <br />
-
       {employees.length > 0 ? (
-        <CompactTable
-          columns={columns}
-          data={data}
-          theme={theme}
-          sort={sort}
-          pagination={pagination}
-        />
+        <DataTable columns={columns} data={data} pagination />
       ) : (
         <p>No employees found.</p>
       )}
-      <br />
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <span>Total Pages: {pagination.state.getTotalPages(data.nodes)}</span>
-
-        <span>
-          Page:{" "}
-          {pagination.state.getPages(data.nodes).map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              style={{
-                fontWeight: pagination.state.page === index ? "bold" : "normal",
-              }}
-              onClick={() => pagination.fns.onSetPage(index)}
-            >
-              {index + 1}
-            </button>
-          ))}
-        </span>
-      </div>
-      <br />
-      <a href="/">Home</a>
     </div>
   );
 };

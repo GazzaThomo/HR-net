@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import DatePicker from "./DatePicker";
-import Dropdown from "./Dropdown";
 import Modal from "./Modal";
 import { Link } from "react-router-dom";
 import useStore from "../store/store";
@@ -31,7 +30,10 @@ const Form = () => {
 
   //for date change
   const handleDateChange = (id, date) => {
-    setFormData({ ...formData, [id]: date });
+    let formattedDate = new Date(date);
+    formattedDate = formattedDate.toISOString().split("T")[0];
+    console.log(formattedDate);
+    setFormData({ ...formData, [id]: formattedDate });
   };
 
   //all dropdown changes
@@ -118,11 +120,15 @@ const Form = () => {
           onChange={(option) => handleDropdownChange("department", option)}
         />
       </form>
-      <button onClick={saveEmployee}>Save</button>
+      <div className="buttons-container">
+        <button onClick={saveEmployee}>Save</button>
+        <Link to="/employee-list" className="current-emp-btn">
+          View Current Employees
+        </Link>
+      </div>
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         Employee Created!
       </Modal>
-      <Link to="/employee-list">View Current Employees</Link>
     </div>
   );
 };
