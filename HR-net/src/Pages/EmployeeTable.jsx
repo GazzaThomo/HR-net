@@ -3,6 +3,7 @@ import DataTable from "react-data-table-component";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import EmployeeModal from "../Components/EmployeeModal";
+import jsonToCsvExport from "json-to-csv-export";
 
 const EmployeeTable = () => {
   const employees = useStore((state) => state.employees);
@@ -106,6 +107,33 @@ const EmployeeTable = () => {
     })
     .map((item, index) => ({ ...item, key: index }));
 
+  const dataToConvert = {
+    data: data.map((item) => ({
+      "First Name": item.firstName,
+      "Last Name": item.lastName,
+      "Start Date": item.startDate,
+      Department: item.department,
+      "Date of Birth": item.dateOfBirth,
+      Street: item.street,
+      City: item.city,
+      State: item.state,
+      "Zip code": item.zipCode,
+    })),
+    filename: "employees_table",
+    delimiter: ",",
+    headers: [
+      "First Name",
+      "Last Name",
+      "Start Date",
+      "Department",
+      "Date of Birth",
+      "Street",
+      "City",
+      "State",
+      "Zip code",
+    ],
+  };
+
   return (
     <div className="employee-table-container">
       <h1>Current Employees</h1>
@@ -116,6 +144,11 @@ const EmployeeTable = () => {
       </label>
 
       <br />
+
+      <button onClick={() => jsonToCsvExport(dataToConvert)}>
+        Download Data
+      </button>
+
       <br />
       {employees.length > 0 ? (
         <DataTable
