@@ -2,10 +2,18 @@ import useStore from "../store/store";
 import DataTable from "react-data-table-component";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import EmployeeModal from "../Components/EmployeeModal";
 
 const EmployeeTable = () => {
   const employees = useStore((state) => state.employees);
   const [search, setSearch] = useState(""); //state for name search
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleRowClick = (employee) => {
+    setSelectedEmployee(employee);
+    setModalOpen(true);
+  };
 
   const sortDate = (rowA, rowB, field) => {
     return new Date(rowA[field]) - new Date(rowB[field]);
@@ -84,7 +92,6 @@ const EmployeeTable = () => {
         item.dateOfBirth
       ).toLowerCase();
 
-      //ugly, but necessary
       return (
         item.firstName.toLowerCase().includes(searchLower) ||
         item.lastName.toLowerCase().includes(searchLower) ||
@@ -111,13 +118,24 @@ const EmployeeTable = () => {
       <br />
       <br />
       {employees.length > 0 ? (
-        <DataTable columns={columns} data={data} pagination />
+        <DataTable
+          columns={columns}
+          data={data}
+          pagination
+          onRowClicked={handleRowClick}
+        />
       ) : (
         <p>No employees found.</p>
       )}
       <Link to="/" className="current-emp-btn">
         Home
       </Link>
+      {modalOpen && (
+        <EmployeeModal
+          employee={selectedEmployee}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
