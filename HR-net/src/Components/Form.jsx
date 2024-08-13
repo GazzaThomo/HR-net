@@ -6,6 +6,7 @@ import useStore from "../store/store";
 import { states } from "../formData/states";
 import { departments } from "../formData/departments";
 import CreateDropdown from "custom-react-dropdown-hrnet";
+import { nanoid } from "nanoid";
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +19,7 @@ const Form = () => {
     state: "",
     zipCode: "",
     department: "",
+    employeeId: nanoid(),
   });
   const [modalOpen, setModalOpen] = useState(false);
   const addEmployee = useStore((state) => state.addEmployee);
@@ -43,6 +45,7 @@ const Form = () => {
 
   //on validate form button
   const saveEmployee = () => {
+    console.log(formData);
     addEmployee(formData); //add employee to store
     setModalOpen(true); //opens modal
   };
