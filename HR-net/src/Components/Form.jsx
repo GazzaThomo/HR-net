@@ -44,8 +44,8 @@ const Form = () => {
   };
 
   //on validate form button
-  const saveEmployee = () => {
-    console.log(formData);
+  const handleSubmit = (e) => {
+    e.preventDefault();
     addEmployee(formData); //add employee to store
     setModalOpen(true); //opens modal
   };
@@ -53,12 +53,13 @@ const Form = () => {
   return (
     <div className="container">
       <h2>Create Employee</h2>
-      <form id="create-employee" onSubmit={(e) => e.preventDefault()}>
+      <form id="create-employee" onSubmit={handleSubmit}>
         <label htmlFor="firstName">First Name</label>
         <input
           id="firstName"
           value={formData.firstName}
           onChange={handleChange}
+          required
         />
 
         <label htmlFor="lastName">Last Name</label>
@@ -66,6 +67,7 @@ const Form = () => {
           id="lastName"
           value={formData.lastName}
           onChange={handleChange}
+          required
         />
 
         <label htmlFor="dateOfBirth">Date of Birth</label>
@@ -73,6 +75,7 @@ const Form = () => {
           id="dateOfBirth"
           selected={formData.dateOfBirth}
           onChange={(date) => handleDateChange("dateOfBirth", date)}
+          required
         />
 
         <label htmlFor="startDate">Start Date</label>
@@ -80,15 +83,26 @@ const Form = () => {
           id="startDate"
           selected={formData.startDate}
           onChange={(date) => handleDateChange("startDate", date)}
+          required
         />
 
         <fieldset className="address">
           <legend>Address</legend>
           <label htmlFor="street">Street</label>
-          <input id="street" value={formData.street} onChange={handleChange} />
+          <input
+            id="street"
+            value={formData.street}
+            onChange={handleChange}
+            required
+          />
 
           <label htmlFor="city">City</label>
-          <input id="city" value={formData.city} onChange={handleChange} />
+          <input
+            id="city"
+            value={formData.city}
+            onChange={handleChange}
+            required
+          />
 
           <label htmlFor="state">State</label>
 
@@ -96,6 +110,7 @@ const Form = () => {
             dropdownId="state"
             optionsArray={states}
             onChange={(option) => handleDropdownChange("state", option)}
+            required
           />
 
           <label htmlFor="zipCode">Zip Code</label>
@@ -104,6 +119,7 @@ const Form = () => {
             type="number"
             value={formData.zipCode}
             onChange={handleChange}
+            required
           />
         </fieldset>
 
@@ -113,10 +129,13 @@ const Form = () => {
           dropdownId="department"
           optionsArray={departments}
           onChange={(option) => handleDropdownChange("department", option)}
+          required
         />
+        <button className="submit-btn" type="submit">
+          Save
+        </button>
       </form>
       <div className="buttons-container">
-        <button onClick={saveEmployee}>Save</button>
         <Link to="/employee-list" className="current-emp-btn">
           View Current Employees
         </Link>

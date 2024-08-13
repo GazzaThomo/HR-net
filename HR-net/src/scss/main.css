@@ -159,6 +159,12 @@ button:hover {
   background: #0056b3;
 }
 
+.submit-btn {
+  margin: 20px auto 0 auto;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
 .modal-backdrop {
   position: fixed;
   top: 0;
