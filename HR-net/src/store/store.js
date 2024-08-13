@@ -9,6 +9,7 @@ const useStore = create(
       employees: mockEmployees,
       addEmployee: (employee) =>
         set((state) => ({ employees: [...state.employees, employee] })),
+      removeEmployee: (employeeArray) => set({ employees: employeeArray }),
     }),
     {
       name: "employee-storage",

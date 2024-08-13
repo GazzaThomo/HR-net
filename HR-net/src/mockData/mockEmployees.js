@@ -9,6 +9,7 @@ export const mockEmployees = [
     state: "75",
     zipCode: "75001",
     department: "Sales",
+    employeeId: 0,
   },
   {
     firstName: "Jane",
@@ -20,6 +21,7 @@ export const mockEmployees = [
     state: "75",
     zipCode: "75005",
     department: "Marketing",
+    employeeId: 1,
   },
   {
     firstName: "Alice",
@@ -31,6 +33,7 @@ export const mockEmployees = [
     state: "75",
     zipCode: "75008",
     department: "Engineering",
+    employeeId: 3,
   },
   {
     firstName: "Bob",
@@ -42,6 +45,7 @@ export const mockEmployees = [
     state: "75",
     zipCode: "75002",
     department: "Human Resources",
+    employeeId: 4,
   },
   {
     firstName: "Charlie",
@@ -53,6 +57,7 @@ export const mockEmployees = [
     state: "75",
     zipCode: "75006",
     department: "Legal",
+    employeeId: 5,
   },
   {
     firstName: "Diana",
@@ -64,6 +69,7 @@ export const mockEmployees = [
     state: "69",
     zipCode: "69002",
     department: "Sales",
+    employeeId: 6,
   },
   {
     firstName: "Edward",
@@ -75,6 +81,7 @@ export const mockEmployees = [
     state: "69",
     zipCode: "69003",
     department: "Marketing",
+    employeeId: 7,
   },
   {
     firstName: "Fiona",
@@ -86,6 +93,7 @@ export const mockEmployees = [
     state: "06",
     zipCode: "06000",
     department: "Engineering",
+    employeeId: 8,
   },
   {
     firstName: "George",
@@ -97,6 +105,7 @@ export const mockEmployees = [
     state: "13",
     zipCode: "13001",
     department: "Human Resources",
+    employeeId: 9,
   },
   {
     firstName: "Hannah",
@@ -108,5 +117,6 @@ export const mockEmployees = [
     state: "13",
     zipCode: "13006",
     department: "Legal",
+    employeeId: 10,
   },
 ];

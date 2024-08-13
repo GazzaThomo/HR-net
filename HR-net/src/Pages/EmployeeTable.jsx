@@ -7,6 +7,7 @@ import jsonToCsvExport from "json-to-csv-export";
 
 const EmployeeTable = () => {
   const employees = useStore((state) => state.employees);
+  const removeEmployee = useStore((state) => state.removeEmployee);
   const [search, setSearch] = useState(""); //state for name search
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -73,8 +74,49 @@ const EmployeeTable = () => {
       selector: (row) => row.zipCode,
       sortable: true,
     },
+    {
+      // eslint-disable-next-line react/button-has-type
+      cell: (row) => (
+        <button
+          className="delete-btn"
+          key={row.employeeId}
+          onClick={(e) => handleButtonClick(row, row.employeeId)}
+        >
+          Delete
+        </button>
+      ),
+      ignoreRowClick: true,
+      allowoverflow: true,
+      button: "true",
+    },
   ];
 
+  const handleButtonClick = (row, employeeId) => {
+    if (employeeId === null) {
+      return window.alert("please try again");
+    }
+    const canFindEmployee = employees.find(
+      (obj) => obj.employeeId === employeeId
+    );
+
+    if (!canFindEmployee) {
+      window.alert(
+        `Sorry, we can't seem to find that employee in the database for some reason. Please contact the support.`
+      );
+    }
+
+    const confirmationAnswer = confirm(
+      `Are you sure you want to delete ${row.firstName} ${row.lastName} ?`
+    );
+
+    if (!confirmationAnswer) return window.alert(`Employee not deleted`);
+
+    const newEmployeeList = employees.filter((obj) => {
+      return obj.employeeId != employeeId;
+    });
+    removeEmployee(newEmployeeList);
+    window.alert("Employee removed !");
+  };
   const reformatDateToDDMMYYYY = (dateStr) => {
     const [year, month, day] = dateStr.split("-");
     return `${day}/${month}/${year}`;
@@ -105,7 +147,7 @@ const EmployeeTable = () => {
         item.zipCode.toLowerCase().includes(searchLower)
       );
     })
-    .map((item, index) => ({ ...item, key: index }));
+    .map((item) => ({ ...item, key: item.employeeId }));
 
   const dataToConvert = {
     data: data.map((item) => ({
@@ -136,10 +178,12 @@ const EmployeeTable = () => {
 
   return (
     <div className="employee-table-container">
-      <h1>Current Employees</h1>
+      <h1>
+        <u>Current Employees</u>
+      </h1>
 
       <label htmlFor="search">
-        Search by first name:&nbsp;
+        Search :&nbsp;
         <input id="search" type="text" value={search} onChange={handleSearch} />
       </label>
 
@@ -155,6 +199,8 @@ const EmployeeTable = () => {
           columns={columns}
           data={data}
           pagination
+          highlightOnHover
+          pointerOnHover
           onRowClicked={handleRowClick}
         />
       ) : (
