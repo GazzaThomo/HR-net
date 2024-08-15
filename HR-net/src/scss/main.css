@@ -50,7 +50,7 @@
   transition: background 0.3s ease;
 }
 .employee-table-container a:hover {
-  background: #0056b3;
+  background: #154c87;
 }
 
 .buttons-container {
@@ -76,7 +76,7 @@
   text-decoration: none;
 }
 .current-emp-btn:hover {
-  background: #0056b3;
+  background: #154c87;
 }
 
 body {
@@ -156,7 +156,7 @@ button {
   transition: background 0.3s ease;
 }
 button:hover {
-  background: #0056b3;
+  background: #154c87;
 }
 
 .submit-btn {
