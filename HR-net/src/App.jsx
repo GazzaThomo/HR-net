@@ -1,8 +1,7 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home.jsx";
 import EmployeeTable from "./Pages/EmployeeTable.jsx";
-import EmployeeTable2 from "./Pages/EmployeeTable.jsx";
 
 function App() {
   return (
