@@ -104,7 +104,7 @@ const EmployeeTable = () => {
       <h1>Current Employees</h1>
 
       <label htmlFor="search">
-        Search by first name:&nbsp;
+        Search :&nbsp;
         <input id="search" type="text" value={search} onChange={handleSearch} />
       </label>
 

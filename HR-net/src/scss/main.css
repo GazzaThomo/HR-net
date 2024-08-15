@@ -36,7 +36,7 @@
   display: inline-block;
   margin-top: 20px;
   padding: 10px 20px;
-  background: #007bff;
+  background: #0056b3;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -46,7 +46,7 @@
   transition: background 0.3s ease;
 }
 .employee-table-container a:hover {
-  background: #0056b3;
+  background: #154c87;
 }
 
 .buttons-container {
@@ -62,7 +62,7 @@
 .current-emp-btn {
   margin-top: 20px;
   padding: 10px 20px;
-  background: #007bff;
+  background: #0056b3;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -72,7 +72,7 @@
   text-decoration: none;
 }
 .current-emp-btn:hover {
-  background: #0056b3;
+  background: #154c87;
 }
 
 body {
@@ -143,7 +143,7 @@ form .address label {
 button {
   margin-top: 20px;
   padding: 10px 20px;
-  background: #007bff;
+  background: #0056b3;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -152,7 +152,7 @@ button {
   transition: background 0.3s ease;
 }
 button:hover {
-  background: #0056b3;
+  background: #154c87;
 }
 
 .modal-backdrop {
