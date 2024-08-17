@@ -90,3 +90,8 @@ button {
   margin: 20px auto 0 auto;
   width: fit-content;
 }
+
+.react-datepicker__navigation--previous,
+.react-datepicker__navigation--next {
+  margin-top: 0 !important;
+}
